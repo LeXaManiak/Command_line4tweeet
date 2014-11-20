@@ -29,7 +29,7 @@ public class Command_line_switcer {
 		
 	
 	
-	
+							
 	
 	public Command_line_switcer() {
 		// TODO Auto-generated constructor stub
@@ -47,31 +47,31 @@ public class Command_line_switcer {
          case COMMAND_GET_STATUS:
          case COMMAND_GET_STATUS1:     	 
         	 System.out.println(COMMAND_GET_STATUS);
-        	 GetStatus (args);
+        	 getstatus (args);
         	 break;
        
          case COMMAND_POST_STATUS:
          case COMMAND_POST_STATUS1:  	 
         	 System.out.println(COMMAND_POST_STATUS);
-        	 PostStatus (args);
+        	 poststatus (args);
              break;
              
          case COMMAND_USER_TIMELINE:
          case COMMAND_USER_TIMELINE1:
         	 System.out.println(COMMAND_USER_TIMELINE);
-        	 GetUserTimeline (args);
+        	 getusertimeline (args);
              break;
              
           
          default:
-        	 PrintHelp ();
+        	 printhelp ();
              
 		 }
 		}
 		
 		else {
 			 System.out.println("No command line args");
-			 PrintHelp ();		
+			 printhelp ();		
 		}
 		
 		
@@ -80,7 +80,7 @@ public class Command_line_switcer {
 
 
 
-	public static void PrintHelp ()
+	public static void printhelp ()
 	{
 		for(String s: HELP_LINE)
 		{
@@ -89,15 +89,15 @@ public class Command_line_switcer {
 	}
 
 
-	public static void GetStatus (String args[])
+	public static void getstatus (String args[])
 	{
 		int id;
-		id=GetId(2, args);
+		id=getid(2, args);
 		System.out.println("GetStatus ID="+id);
 	}
 
 	
-	public static void PostStatus (String args[])
+	public static void poststatus (String args[])
 	{
 		int id;
 		String text;
@@ -106,13 +106,21 @@ public class Command_line_switcer {
 		int likes;
 		int shares;
 		
-		
-		id=GetId(2, args);
+		 System.out.println("Getting ID");
+		id=getid(2, args);
+		  System.out.println("PostStatus ID="+id);
 //		text=args[3];
-		text=GetText(3, args, "Text");
+		 System.out.println("Getting text");
+		text=gettext(3, args, "Text");
+		  System.out.println("PostStatus Text="+text);
+		//System.out.println("Getting data");
 		//date=SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(args[4]);
-		likes=GetInt(5, args, "Likes");
-		shares=GetInt(6, args, "Shares");
+		 System.out.println("Getting likes");
+		likes=getint(5, args, "Likes");
+		  System.out.println("PostStatus likes="+likes);
+		 System.out.println("Getting shares");
+		shares=getint(6, args, "Shares");
+		  System.out.println("PostStatus shares="+shares);
 		
 		System.out.println("PostStatus ID="+id);
 		System.out.println("PostStatus Text="+text);
@@ -121,76 +129,79 @@ public class Command_line_switcer {
 		System.out.println("PostStatus shares="+shares);
 	}
 
-	public static void GetUserTimeline (String args[])
+	public static void getusertimeline (String args[])
 	{
 		int id;
-		id=GetId(2, args);
+		id=getid(2, args);
 		System.out.println("GetUserTimeline ID="+id);	
 	}
 	
 	
 	
-	private static int GetInt(int position, String[] args, String name) {
+	private static int getint(int position, String[] args, String name) {
 		int id=0;
 		String s;
+		
 		if (args.length<(position+1))
-			s = getStringSystemIn("Enter "+name);
+			s = getstringsystemin("Enter "+name);
 		else s = args [position];
 	
 		
-		id = strToInt(s);
+		id = strtoint(s);
 		System.out.println(name+id);
 		
 		return id;
 	}
 	
-	private static String GetText(int position, String[] args, String name) {
+	private static String gettext(int position, String[] args, String name) {
 		
 		String s;
 		if (args.length<(position+1))
-			s = getStringSystemIn("Enter "+name);
+			s = getstringsystemin("Enter "+name);
 		else s = args [position];
 	
 		return s;
 	}
 	
 	
-	private static int GetId(int position, String[] args) {
+	private static int getid(int position, String[] args) {
 		int id=0;
 		String s;
 		if (args.length<(position+1))
-			s = getStringSystemIn("Enter ID");
+			s = getstringsystemin("Enter ID");
 		else s = args [position];
 		
 		//System.out.println("ID="+s);
 		
 		
-		id = strToInt(s);
+		id = strtoint(s);
 		System.out.println("ID="+id);
 		
 		return id;
 	}
 
 	
-	private static int strToInt(String s) {
-		int id=0;
+	private static int strtoint(String s) {
+		int i=0;
 		boolean error;
 		
 do {
 	error=false;	
 		try {
-		      id = Integer.parseInt(s);
+		      i = Integer.parseInt(s);
 		} 
+		
+		
 		catch (NumberFormatException e) 
 		{
-			s = getStringSystemIn("WRONG ID Enter ID");
+			s = getstringsystemin("Enter an integer number");
 			error=true;
 		}
 		
 }while (error) ; 
 		
-		
-		return id;
+		i= Math.abs(i);
+		return i;
 	}
 
 	
@@ -220,7 +231,7 @@ do {
 	
 	
 	
-private static String getStringSystemIn(String k) {
+private static String getstringsystemin(String k) {
 		String s;
 		{
 			System.out.println(k);
